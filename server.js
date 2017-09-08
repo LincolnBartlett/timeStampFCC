@@ -19,6 +19,7 @@ app.get("/:id", function (request, response) {
   var date = request.params.id;
   var properDate = '';
   var valid = false;
+  var final= {};
   
   if (date > 0){
     if(date > 100000000000){
@@ -27,6 +28,13 @@ app.get("/:id", function (request, response) {
       if (valid === true){
         properDate = moment.unix(date).format("MMMM, DD, YYYY");
         date *= 1000;
+        final = {
+          "unix" : `"${unix}"`,
+          "natural" : `"${nat}`
+        }
+        
+        
+        
         response.render('index', {unix: date, natural: properDate, valid : valid});       
       } else {
           response.send("sorry");
@@ -42,9 +50,10 @@ app.get("/:id", function (request, response) {
       }
     }
   } else {
+      properDate = moment(date).format("MMMM, DD, YYYY");  
       date = moment(date).format('x');
-      properDate = moment(date).format("MMMM, DD, YYYY");   
-      response.render('index', {natural: date, unix: properDate, valid : valid});
+      valid = moment.unix(date).format('x') > 0;
+      response.render('index', {unix: date, natural: properDate, valid : valid});
   }
 
 });
