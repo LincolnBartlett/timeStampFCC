@@ -19,53 +19,49 @@ app.get("/:id", function (request, response) {
   var date = request.params.id;
   var properDate = '';
   var valid = false;
-  var final= {};
-  
+  var final;
+  var finalCon= function(unix, natural){
+    return {
+      "unix" : unix,
+      "natural" : natural
+    };
+  };
   if (date > 0){
-    if(date > 100000000000){
-      date /= 1000,
-      valid = moment.unix(date).format('x') > 0;
-      if (valid === true){
-        properDate = moment.unix(date).format("MMMM, DD, YYYY");
-        date *= 1000;
-        final = {
-          "unix" : Number(date),
-          "natural" : properDate
-          };
-        response.render('index', {unix: date, natural: properDate, valid : valid, final: final});       
-      } else {
-          response.send("sorry");
-      }
-
-    } else {
-      valid = moment.unix(date).format('x') > 0;
-      if (valid == true){
-        properDate = moment.unix(date).format("MMMM, DD, YYYY");
-        final = {
-          "unix" : Number(date),
-          "natural" : properDate
-          };
-        response.render('index', {unix: date, natural: properDate, valid : valid, final: final});       
-      } else {
-          response.send("sorry");
-      }
-    }
+        if(date > 100000000000){
+          date /= 1000,
+          valid = moment.unix(date).format('x') > 0;
+            if (valid === true){
+              properDate = moment.unix(date).format("MMMM, DD, YYYY");
+              date *= 1000;
+              final = finalCon(Number(date), properDate);  
+              response.render('index', {final: final});       
+            } else {
+                final = finalCon(null, null); 
+                response.render('index', {final: final}); 
+            }
+        } else {
+          valid = moment.unix(date).format('x') > 0;
+            if (valid == true){
+              properDate = moment.unix(date).format("MMMM, DD, YYYY");
+              final = finalCon(Number(date), properDate); 
+              response.render('index', {final: final});       
+            } else {
+              final = finalCon(null, null); 
+            }
+        }
   } else {
       properDate = moment(date).format("MMMM, DD, YYYY");  
       date = moment(date).format('x');
       valid = moment.unix(date).format('x') > 0;
-      final = {
-          "unix" : Number(date),
-          "natural" : properDate
-          };
-      response.render('index', {unix: date, natural: properDate, valid : valid, final: final});
+        if (valid == true){
+          final = finalCon(Number(date), properDate); 
+          response.render('index', {final: final});
+        }else{
+          final = finalCon(null, null); 
+          response.render('index', {final: final}); 
+        }
   }
-
 });
-
-
-
-// listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
