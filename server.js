@@ -17,12 +17,19 @@ app.get("/", function (request, response) {
 
 app.get("/:id", function (request, response) {
   var date = request.params.id;
+  var properDate = '';
   if (date > 0){
-    date /= 1000;
-      var properDate = moment.unix(date).format("MMMM, DD, YYYY");
-  response.render('index', {date: date, properDate: properDate});
+    if(date.length = 11){
+      date /= 1000;
+      properDate = moment.unix(date).format("MMMM, DD, YYYY");
+      response.render('index', {unix: date, natural: properDate});
+    }else if (date.length = 13){
+      properDate = moment.unix(date).format("MMMM, DD, YYYY");
+      response.render('index', {unix: date, natural: properDate});
+    }
   }else {
-    response.send("not a number");
+      properDate = moment(date).format("MMMM, DD, YYYY");   
+      response.render('index', {natural: date, unix: properDate});
   }
 
 });
