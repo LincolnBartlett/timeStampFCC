@@ -29,13 +29,10 @@ app.get("/:id", function (request, response) {
         properDate = moment.unix(date).format("MMMM, DD, YYYY");
         date *= 1000;
         final = {
-          "unix" : `"${unix}"`,
-          "natural" : `"${nat}`
-        }
-        
-        
-        
-        response.render('index', {unix: date, natural: properDate, valid : valid});       
+          "unix" : Number(date),
+          "natural" : properDate
+          };
+        response.render('index', {unix: date, natural: properDate, valid : valid, final: final});       
       } else {
           response.send("sorry");
       }
@@ -44,7 +41,11 @@ app.get("/:id", function (request, response) {
       valid = moment.unix(date).format('x') > 0;
       if (valid == true){
         properDate = moment.unix(date).format("MMMM, DD, YYYY");
-        response.render('index', {unix: date, natural: properDate, valid : valid});       
+        final = {
+          "unix" : Number(date),
+          "natural" : properDate
+          };
+        response.render('index', {unix: date, natural: properDate, valid : valid, final: final});       
       } else {
           response.send("sorry");
       }
@@ -53,7 +54,11 @@ app.get("/:id", function (request, response) {
       properDate = moment(date).format("MMMM, DD, YYYY");  
       date = moment(date).format('x');
       valid = moment.unix(date).format('x') > 0;
-      response.render('index', {unix: date, natural: properDate, valid : valid});
+      final = {
+          "unix" : Number(date),
+          "natural" : properDate
+          };
+      response.render('index', {unix: date, natural: properDate, valid : valid, final: final});
   }
 
 });
