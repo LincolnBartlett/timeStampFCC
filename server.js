@@ -12,14 +12,19 @@ app.use(express.static('public'));
 
 
 app.get("/", function (request, response) {
-  response.redirect(`/${Date.now()}`);
+  response.redirect(`/${moment().format('unix')}`);
 });
 
 app.get("/:id", function (request, response) {
   var date = request.params.id;
-  var properDate = moment.unix(date).format("MMMM, DD, YYYY");
-
+  if (date > 0){
+    date /= 1000;
+      var properDate = moment.unix(date).format("MMMM, DD, YYYY");
   response.render('index', {date: date, properDate: properDate});
+  }else {
+    response.send("not a number");
+  }
+
 });
 
 
