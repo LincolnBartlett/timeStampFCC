@@ -20,14 +20,14 @@ app.get("/:id", function (request, response) {
   var unixCheck = false;
   var normCheck = false;
   dateArr.forEach(function (thing){
-    if (thing === Number){
-        
-        response.render('index', {id: thing + "test"} );
+    var numCheck = 'yeah';
+    if (numCheck === 'yeah'){
+        response.render('index', {id: 'yeah'});
     }
   });
   
   
-  //response.render('index', {id: dateArr});
+  response.render('index', {id: dateArr});
 });
 
 
