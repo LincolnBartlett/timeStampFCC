@@ -2,9 +2,11 @@
 // where your node app starts
 
 // init project
-var express = require('express');
+var express = require('express'),
+    ejs     = require('ejs');
 var app = express();
 
+app.set('view engine', 'ejs');
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
@@ -18,7 +20,7 @@ app.get("/", function (request, response) {
 
 app.get("/:id", function (request, response) {
   
-  response.send({id: res.params.id});
+  response.render('index', {id: response.params});
 });
 
 
