@@ -10,7 +10,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.15.3",
+    "express": "^4.15.4",
     "ejs": "^2.5.7",
     "moment": "^2.18.1"
   },
@@ -18,7 +18,7 @@
     "node": "8.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/welcome-project"
+    "url": "https://github.com/LincolnBartlett/glitch.git"
   },
   "license": "MIT",
   "keywords": [
