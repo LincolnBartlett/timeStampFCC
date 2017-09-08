@@ -3,8 +3,9 @@
 
 // init project
 var express = require('express'),
-    ejs     = require('ejs');
-var app = express();
+    ejs     = require('ejs'),
+    moment  = require('moment'),
+    app = express();
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -16,18 +17,9 @@ app.get("/", function (request, response) {
 
 app.get("/:id", function (request, response) {
   var date = request.params.id;
-  var dateArr = date.split(' ');
-  var unixCheck = false;
-  var normCheck = false;
-  dateArr.forEach(function (thing){
-    var numCheck = 'yeah';
-    if (numCheck === 'yeah'){
-        response.render('index', {id: 'yeah'});
-    }
-  });
-  
-  
-  response.render('index', {id: dateArr});
+  var properDate = moment.unix(date).format("MMMM, DD, YYYY");
+
+  response.render('index', {date: date, properDate: properDate});
 });
 
 
