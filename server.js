@@ -16,14 +16,18 @@ app.get("/", function (request, response) {
 
 app.get("/:id", function (request, response) {
   var date = request.params.id;
-  var dateArr = date.split('');
+  var dateArr = date.split(' ');
+  var unixCheck = false;
+  var normCheck = false;
+  dateArr.forEach(function (thing){
+    if (thing === Number){
+        
+        response.render('index', {id: thing + "test"} );
+    }
+  });
   
-  dateArr.forEach(thing){
-    
-  };
   
-  
-  response.render('index', {id: dateArr});
+  //response.render('index', {id: dateArr});
 });
 
 
