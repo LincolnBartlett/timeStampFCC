@@ -18,18 +18,21 @@ app.get("/", function (request, response) {
 app.get("/:id", function (request, response) {
   var date = request.params.id;
   var properDate = '';
+  
+  var valid = (new Date(date)).getTime() > 0;
+  
   if (date > 0){
-    if(date.length = 11){
-      date /= 1000;
+    if(date > 100000000000){
+      date /= 1000,
       properDate = moment.unix(date).format("MMMM, DD, YYYY");
-      response.render('index', {unix: date, natural: properDate});
-    }else if (date.length = 13){
+      response.render('index', {unix: date, natural: properDate, valid : valid});
+    }else{
       properDate = moment.unix(date).format("MMMM, DD, YYYY");
-      response.render('index', {unix: date, natural: properDate});
+      response.render('index', {unix: date, natural: properDate, valid : valid});
     }
   }else {
       properDate = moment(date).format("MMMM, DD, YYYY");   
-      response.render('index', {natural: date, unix: properDate});
+      response.render('index', {natural: date, unix: properDate, valid : valid});
   }
 
 });
